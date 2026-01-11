@@ -145,7 +145,7 @@ VITE_API_URL=http://localhost:5000/api
 
 ### 1️⃣ Clone Repository
 ```
-git clone https://github.com/your-username/codevault.git
+git clone https://github.com/Ashish-Pawar-AP/CodeVault.git
 ```
 
 ### 2️⃣ Backend Setup
