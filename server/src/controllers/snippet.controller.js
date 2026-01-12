@@ -1,5 +1,5 @@
-import Snippet from "../models/snippet.model.js";
-import SnippetVersion from "../models/snippetVersion.model.js";
+import Snippet from "../models/Snippets.models.js";
+import SnippetVersion from "../models/SnippetVersion.models.js";
 
 /* ================= CREATE SNIPPET ================= */
 export const createSnippet = async (req, res) => {

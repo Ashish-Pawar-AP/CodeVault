@@ -9,6 +9,7 @@ import {
   deleteSnippet,
   copySnippet,
   searchSnippets,
+  getSnippetVersions,
 } from "../controllers/snippet.controller.js";
 
 const router = express.Router();

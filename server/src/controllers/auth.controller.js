@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
-import User from "../models/user.model.js";
+import User from "../models/User.models.js";
 import generateToken from "../utils/generateToken.js";
 import sendEmail from "../utils/sendEmail.js";
 
@@ -18,27 +18,28 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
-    await User.create({
+    const user = await User.create({
       name,
       email,
       password: hashedPassword,
       emailVerificationToken: verificationToken,
-      emailVerificationExpires: Date.now() + 24 * 60 * 60 * 1000
+      emailVerificationExpires: Date.now() + 24 * 60 * 60 * 1000,
     });
 
-    const verifyUrl = `${process.env.CLIENT_URL}/verify-email/${verificationToken}`;
+    // const verifyUrl = `${process.env.CLIENT_URL}/verify-email/${verificationToken}`;
 
     await sendEmail(
       email,
       "Verify your email",
       `<p>Click below to verify your email:</p>
-       <a href="${verifyUrl}">${verifyUrl}</a>`
+       <a href="#">${req.protocol}://${req.get("host")}/api/auth/verify-email/${verificationToken}</a>`
     );
 
-    res.status(201).json({
-      message: "Registered successfully. Please verify your email."
+    res.status(201).json(user, {
+      message: "Registered successfully. Please verify your email.",
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -47,10 +48,11 @@ export const register = async (req, res) => {
 export const verifyEmail = async (req, res) => {
   try {
     const { token } = req.params;
-
+    console.log(token);
+    
     const user = await User.findOne({
       emailVerificationToken: token,
-      emailVerificationExpires: { $gt: Date.now() }
+      emailVerificationExpires: { $gt: Date.now() },
     });
 
     if (!user) {
@@ -61,10 +63,11 @@ export const verifyEmail = async (req, res) => {
     user.emailVerificationToken = undefined;
     user.emailVerificationExpires = undefined;
 
-    await user.save();
+    await user.save({ validateBeforeSave: false });
 
     res.status(200).json({ message: "Email verified successfully" });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -81,7 +84,7 @@ export const login = async (req, res) => {
 
     if (!user.isVerified) {
       return res.status(403).json({
-        message: "Please verify your email before logging in"
+        message: "Please verify your email before logging in",
       });
     }
 
@@ -99,18 +102,22 @@ export const login = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        theme: user.theme
-      }
+        theme: user.theme,
+      },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
 /* ================= LOGOUT ================= */
 export const logout = async (req, res) => {
-  res.status(200).json({
-    message: "Logout successful. Remove token from client."
+  const user = await User.findById(req.user._id)
+  user.token = undefined
+
+  res.status(200).json({user:user.token,
+    message: "Logout successful. Remove token from client.",
   });
 };
 
@@ -130,9 +137,10 @@ export const changePassword = async (req, res) => {
     await user.save();
 
     res.status(200).json({
-      message: "Password changed successfully"
+      message: "Password changed successfully",
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };

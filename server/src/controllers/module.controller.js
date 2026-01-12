@@ -1,10 +1,10 @@
-import Module from "../models/module.model.js";
+import Module from "../Models/Module.models.js";
 
 /* CREATE MODULE */
 export const createModule = async (req, res) => {
   const module = await Module.create({
     ...req.body,
-    userId: req.user._id
+    userId: req.user._id,
   });
 
   res.status(201).json(module);
@@ -12,8 +12,9 @@ export const createModule = async (req, res) => {
 
 /* GET MODULES */
 export const getModules = async (req, res) => {
-  const modules = await Module.find({ userId: req.user._id })
-    .populate("snippetIds");
+  const modules = await Module.find({ userId: req.user._id }).populate(
+    "snippetIds"
+  );
 
   res.status(200).json(modules);
 };
@@ -37,7 +38,7 @@ export const updateModule = async (req, res) => {
 export const deleteModule = async (req, res) => {
   const module = await Module.findOneAndDelete({
     _id: req.params.id,
-    userId: req.user._id
+    userId: req.user._id,
   });
 
   if (!module) {

@@ -1,7 +1,7 @@
 import axios from "./axios";
 
-export const getCollections = () => axios.get("/auth/v1/collections");
+export const getCollections = () => axios.get("/auth/collections");
 export const createCollection = (data) =>
-  axios.post("/auth/v1/collections", data);
+  axios.post("/auth/collections", data);
 export const deleteCollection = (id) =>
-  axios.delete(`/auth/v1/collections/${id}`);
+  axios.delete(`/auth/collections/${id}`);
