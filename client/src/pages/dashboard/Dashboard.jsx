@@ -3,11 +3,14 @@ import Navbar from "../../components/layout/Navbar";
 
 const Dashboard = ({ children }) => {
   return (
-    <div className="flex">
+    <div className="flex bg-slate-100 min-h-screen">
       <Sidebar />
-      <div className="flex-1 bg-gray-100 min-h-screen">
+
+      <div className="flex-1">
         <Navbar />
-        <div className="p-6">{children}</div>
+        <main className="p-6 max-w-7xl mx-auto">
+          {children}
+        </main>
       </div>
     </div>
   );

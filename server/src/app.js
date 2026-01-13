@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/snippets", snippetRoutes);
-app.use("/api/module", moduleRoutes);
+app.use("/api/modules", moduleRoutes);
 app.use("/api/collection", collectionRoutes);
 
 export default app

@@ -32,7 +32,9 @@ export const register = async (req, res) => {
       email,
       "Verify your email",
       `<p>Click below to verify your email:</p>
-       <a href="#">${req.protocol}://${req.get("host")}/api/auth/verify-email/${verificationToken}</a>`
+       <a href="#">${req.protocol}://${req.get(
+        "host"
+      )}/api/auth/verify-email/${verificationToken}</a>`
     );
 
     res.status(201).json(user, {
@@ -49,7 +51,7 @@ export const verifyEmail = async (req, res) => {
   try {
     const { token } = req.params;
     console.log(token);
-    
+
     const user = await User.findOne({
       emailVerificationToken: token,
       emailVerificationExpires: { $gt: Date.now() },
@@ -113,10 +115,7 @@ export const login = async (req, res) => {
 
 /* ================= LOGOUT ================= */
 export const logout = async (req, res) => {
-  const user = await User.findById(req.user._id)
-  user.token = undefined
-
-  res.status(200).json({user:user.token,
+  res.status(200).json({
     message: "Logout successful. Remove token from client.",
   });
 };
