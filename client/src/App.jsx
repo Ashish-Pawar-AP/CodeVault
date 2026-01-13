@@ -11,6 +11,9 @@ import CreateSnippet from "./pages/dashboard/CreateSnippet";
 import EditSnippet from "./pages/dashboard/EditSnippet";
 import Collections from "./pages/dashboard/Collections";
 import Modules from "./pages/dashboard/Modules";
+import DashboardHome from "./pages/dashboard/DashboardHome";
+import ModuleDetails from "./pages/dashboard/ModuleDetails";
+import CollectionDetails from "./pages/dashboard/CollectionDetails";
 
 import ProtectedRoute from "./components/common/ProtectedRoute";
 
@@ -29,7 +32,9 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Dashboard>
+                  <DashboardHome />
+                </Dashboard>
               </ProtectedRoute>
             }
           />
@@ -80,11 +85,32 @@ function App() {
           />
 
           <Route
+            path="/collections/:id"
+            element={
+              <ProtectedRoute>
+                <Dashboard>
+                  <CollectionDetails />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/modules"
             element={
               <ProtectedRoute>
                 <Dashboard>
                   <Modules />
+                </Dashboard>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/modules/:id"
+            element={
+              <ProtectedRoute>
+                <Dashboard>
+                  <ModuleDetails />
                 </Dashboard>
               </ProtectedRoute>
             }

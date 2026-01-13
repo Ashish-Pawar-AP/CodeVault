@@ -17,4 +17,6 @@ router.post("/logout", logout);
 router.get("/verify-email/:token", verifyEmail);
 router.put("/change-password", protect, changePassword);
 
+
+
 export default router;

@@ -1,4 +1,4 @@
-import Module from "../Models/Module.models.js";
+import Module from "../models/Module.models.js";
 
 /* CREATE MODULE */
 export const createModule = async (req, res) => {

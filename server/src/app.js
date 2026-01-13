@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes.js";
 import snippetRoutes from "./routes/snippet.routes.js";
 import moduleRoutes from "./routes/module.routes.js";
 import collectionRoutes from "./routes/collection.routes.js";
+import dashboardRoutes from "./routes/dashboard.routes.js";
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/snippets", snippetRoutes);
 app.use("/api/modules", moduleRoutes);
 app.use("/api/collection", collectionRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 export default app
